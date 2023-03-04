@@ -1,6 +1,7 @@
 #! /bin/sh
 #? Usage: ./new.sh 2022 7
 set -e
+source .env
 day=$2
 if [[ ${#day} -lt 2 ]] ; then
     day="00${day}"
