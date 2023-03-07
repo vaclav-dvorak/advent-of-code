@@ -1,8 +1,10 @@
 version: '3'
 
-dotenv: ['.env']
+output: prefixed
 
 silent: true
+
+dotenv: ['.env']
 
 tasks:
   test:
@@ -10,7 +12,7 @@ tasks:
     cmds:
       - go test ./...
 
-  coverage:
+  test:coverage:
     desc: Generate test coverage report
     cmds:
       - go test ./... -coverprofile=cov.out
