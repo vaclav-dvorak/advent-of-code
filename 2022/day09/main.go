@@ -98,20 +98,19 @@ func solveRope(ln int, input io.Reader) int {
 					}
 					continue
 				}
-				knotFollows(&rope[n], rope[n-1],n == (ln-1))
+				knotFollows(&rope[n], rope[n-1], n == (ln-1))
 			}
 		}
 	}
 	return len(visited)
 }
 
-
 func fs1(input io.Reader) int {
-	return solveRope(2,input)
+	return solveRope(2, input)
 }
 
 func fs2(input io.Reader) int {
-	return solveRope(10,input)
+	return solveRope(10, input)
 }
 
 func main() {
