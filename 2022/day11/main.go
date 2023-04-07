@@ -26,7 +26,7 @@ var (
 
 func parseHerd(input io.Reader) {
 	scanner := bufio.NewScanner(input)
-	herd = make([]monkey, 10)
+	herd = make([]monkey, 0)
 	herd_mod = 1
 	uk := 0
 	for scanner.Scan() {
@@ -42,6 +42,7 @@ func parseHerd(input io.Reader) {
 				log.Fatal(err)
 			}
 			uk = v
+			herd = append(herd, monkey{})
 			continue
 		}
 		switch instr {
@@ -93,7 +94,7 @@ func parseHerd(input io.Reader) {
 }
 
 func monkeyBusiness(rounds int, relief bool) int {
-	inspections := make([]int, 10)
+	inspections := make([]int, len(herd))
 	for round := 0; round < rounds; round++ {
 		for i, monk := range herd {
 			for _, item := range monk.items {
@@ -109,7 +110,7 @@ func monkeyBusiness(rounds int, relief bool) int {
 				if relief {
 					newWorry = newWorry / 3 //? relief
 				} else {
-					newWorry = newWorry % herd_mod
+					newWorry = newWorry % herd_mod //? math relief
 				}
 				if newWorry%monk.test == 0 {
 					herd[monk.ifTrueThrow].items = append(herd[monk.ifTrueThrow].items, newWorry)
