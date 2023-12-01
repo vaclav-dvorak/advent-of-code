@@ -1,10 +1,10 @@
-version: '3'
+version: "3"
 
 output: prefixed
 
 silent: true
 
-dotenv: ['.env']
+dotenv: [".env"]
 
 tasks:
   test:
@@ -28,6 +28,7 @@ tasks:
         DIR={{(split " " .CLI_ARGS)._0}}/day${day}
         if [ -d ${DIR} ]; then echo "${DIR} directory exists."; exit 1; fi
         echo "creating $DIR"
-        cp -R template ${DIR}
+        mkdir -p $DIR
+        cp -R template/ ${DIR}/
         curl --silent --cookie "session=${ADVENT_OF_CODE_COOKIE}" https://adventofcode.com/{{(split " " .CLI_ARGS)._0}}/day/{{(split " " .CLI_ARGS)._1}}/input -o ${DIR}/input.txt
         echo "input.txt downloaded"
