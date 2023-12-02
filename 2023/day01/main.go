@@ -9,8 +9,7 @@ import (
 )
 
 func calcLine(in string) (ret int) {
-	first := -1
-	last := -1
+	var first, last int = -1, -1
 	for i := range in {
 		if n, err := strconv.Atoi(in[i : i+1]); err == nil {
 			if first < 0 {
@@ -24,8 +23,7 @@ func calcLine(in string) (ret int) {
 }
 
 func calcLineWord(in string) (ret int) {
-	first := -1
-	last := -1
+	var first, last int = -1, -1
 	for i := range in {
 		num := -1
 		if i < len(in)-2 {
