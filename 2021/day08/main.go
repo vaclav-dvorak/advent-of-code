@@ -1,24 +1,52 @@
 package main
 
 import (
+	"bufio"
 	"fmt"
+	"io"
+	"log"
+	"os"
+	"strings"
 )
 
-func main() {
-	readings := initReadings()
-	getFirstAnswer(readings)
-}
+func processLine(in string) (out int) {
+	var uniq map[int]bool = map[int]bool{2: true, 4: true, 3: true, 7: true}
+	split := strings.Split(in, " | ")
+	digits := strings.Split(split[1], " ")
 
-func getFirstAnswer(in []reading) {
-	ident := 0
-	valid := map[int]struct{}{2: {}, 3: {}, 4: {}, 7: {}}
-	for _, val := range in {
-		for _, sig := range val.signals {
-			if _, ok := valid[len(sig)]; ok {
-				ident++
-				// fmt.Printf("%s\n", sig)
-			}
+	for _, digit := range digits {
+		l := len(digit)
+		if found := uniq[l]; found {
+			out++
 		}
 	}
-	fmt.Printf("identified: %d\n", ident)
+	return
+}
+
+func fs1(input io.Reader) int {
+	scanner := bufio.NewScanner(input)
+	sum := 0
+	for scanner.Scan() {
+		line := scanner.Text()
+		sum += processLine(line)
+	}
+	return sum
+}
+
+func fs2(input io.Reader) int {
+	scanner := bufio.NewScanner(input)
+	for scanner.Scan() {
+		line := scanner.Text()
+		_ = line
+	}
+
+	return 42
+}
+
+func main() {
+	f, err := os.Open("test.txt")
+	if err != nil {
+		log.Fatal(err)
+	}
+	fs1(f)
 }

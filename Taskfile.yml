@@ -23,12 +23,12 @@ tasks:
     desc: Prepare next day challenge
     cmds:
       - |
-        day={{(split " " .CLI_ARGS)._1}}
+        day={{index (splitArgs .CLI_ARGS) 1}}
         if [[ ${#day} -lt 2 ]] ; then day="00${day}"; day="${day: -2}"; fi
-        DIR={{(split " " .CLI_ARGS)._0}}/day${day}
+        DIR={{index (splitArgs .CLI_ARGS) 0}}/day${day}
         if [ -d ${DIR} ]; then echo "${DIR} directory exists."; exit 1; fi
         echo "creating $DIR"
         mkdir -p $DIR
         cp -R template/ ${DIR}/
-        curl --silent --cookie "session=${ADVENT_OF_CODE_COOKIE}" https://adventofcode.com/{{(split " " .CLI_ARGS)._0}}/day/{{(split " " .CLI_ARGS)._1}}/input -o ${DIR}/input.txt
+        curl --silent --cookie "session=${ADVENT_OF_CODE_COOKIE}" https://adventofcode.com/{{index (splitArgs .CLI_ARGS) 0}}/day/{{index (splitArgs .CLI_ARGS) 1}}/input -o ${DIR}/input.txt
         echo "input.txt downloaded"
