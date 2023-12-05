@@ -7,3 +7,19 @@ My solutions to the Advents of Code. Probably the best programming challenge can
 ![Progress2022](https://progress-bar.dev/11/?scale=21&title=2022&width=120&suffix=/21)
 
 ![Progress2023](https://progress-bar.dev/4/?scale=21&title=2023&width=120&suffix=/21)
+
+## .env
+
+Task has a functionality to download puzzle input. To be able to do that one must login to advent of code page and extract his cookie session id. Then set it on `.env` file like this:
+
+```bash
+ADVENT_OF_CODE_COOKIE=53616...foobar...8fea6cc
+```
+
+## new solution
+
+New solution should start with command like `task new -- 2021 1`. First argument is `year` and second `day` of challenge. This will create new folder in appropriate folder. Extract template into and download puzzle input.
+
+## prove solution
+
+One solution is made execute `task test`. All tests should pass.
