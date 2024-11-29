@@ -7,6 +7,13 @@ silent: true
 dotenv: [".env"]
 
 tasks:
+  prepare:
+    desc: Download dependencies and prepare dev env
+    cmds:
+      - go mod download
+      - go mod tidy
+      - go mod vendor
+
   test:
     desc: Test all days
     cmds:
