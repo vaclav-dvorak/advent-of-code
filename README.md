@@ -2,13 +2,13 @@
 
 My solutions to the Advents of Code. Probably the best programming challenge can be find [here](https://adventofcode.com/).
 
-![Progress2021](https://progress-bar.xyz/11/?scale=25&title=2021&width=120&suffix=/25)
+![Progress2021](https://progress-bar.xyz/11/?scale=25&title=2021%2011/25&width=120)
 
-![Progress2022](https://progress-bar.xyz/11/?scale=25&title=2022&width=120&suffix=/25)
+![Progress2022](https://progress-bar.xyz/11/?scale=25&title=2022%2011/25&width=120)
 
-![Progress2023](https://progress-bar.xyz/4/?scale=25&title=2023&width=120&suffix=/25)
+![Progress2023](https://progress-bar.xyz/4/?scale=25&title=2023%2004/25&width=120)
 
-![Progress2024](https://progress-bar.xyz/1/?scale=25&title=2024&width=120&suffix=/25)
+![Progress2024](https://progress-bar.xyz/1/?scale=25&title=2024%2001/25&width=120)
 
 ## .env
 
