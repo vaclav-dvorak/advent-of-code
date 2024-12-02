@@ -8,7 +8,7 @@ My solutions to the Advents of Code. Probably the best programming challenge can
 
 ![Progress2023](https://progress-bar.xyz/4/?scale=25&title=2023%2004/25&width=120)
 
-![Progress2024](https://progress-bar.xyz/1/?scale=25&title=2024%2001/25&width=120)
+![Progress2024](https://progress-bar.xyz/2/?scale=25&title=2024%2001/25&width=120)
 
 ## .env
 
