@@ -8,6 +8,8 @@ My solutions to the Advents of Code. Probably the best programming challenge can
 
 ![Progress2023](https://progress-bar.xyz/4/?scale=25&title=2023&width=120&suffix=/25)
 
+![Progress2024](https://progress-bar.xyz/1/?scale=25&title=2024&width=120&suffix=/25)
+
 ## .env
 
 Task has a functionality to download puzzle input. To be able to do that one must login to advent of code page and extract his cookie session id. Then set it on `.env` file like this:
