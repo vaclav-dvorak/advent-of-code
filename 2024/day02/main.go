@@ -91,7 +91,6 @@ func fs1(input io.Reader) int {
 		reports = append(reports, report{
 			levels: levels,
 		})
-		_ = line
 	}
 	return findSafe(reports, false)
 }
@@ -110,7 +109,6 @@ func fs2(input io.Reader) int {
 		reports = append(reports, report{
 			levels: levels,
 		})
-		_ = line
 	}
 	return findSafe(reports, true)
 }

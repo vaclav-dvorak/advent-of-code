@@ -27,7 +27,6 @@ func fs1(input io.Reader) int {
 		} else {
 			list2 = append(list2, wi)
 		}
-		_ = line
 	}
 	sort.Ints(list1)
 	sort.Ints(list2)
@@ -62,7 +61,6 @@ func fs2(input io.Reader) int {
 		} else {
 			list2 = append(list2, wi)
 		}
-		_ = line
 	}
 	sum := 0
 	for _, v1 := range list1 {
