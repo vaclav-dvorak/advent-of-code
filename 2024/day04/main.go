@@ -67,7 +67,7 @@ func searchWord(ws []string) (count int) {
 			}
 		}
 	}
-	return count
+	return
 }
 
 func searchWord2(ws []string) (count int) {
@@ -86,7 +86,7 @@ func searchWord2(ws []string) (count int) {
 			}
 		}
 	}
-	return count
+	return
 }
 
 func fs1(input io.Reader) int {
@@ -96,9 +96,7 @@ func fs1(input io.Reader) int {
 		line := scanner.Text()
 		ws = append(ws, line)
 	}
-	c := searchWord(ws)
-	fmt.Printf("count: %d\n", c)
-	return c
+	return searchWord(ws)
 }
 
 func fs2(input io.Reader) int {
@@ -108,9 +106,7 @@ func fs2(input io.Reader) int {
 		line := scanner.Text()
 		ws = append(ws, line)
 	}
-	c := searchWord2(ws)
-	fmt.Printf("count: %d\n", c)
-	return c
+	return searchWord2(ws)
 }
 
 func main() {

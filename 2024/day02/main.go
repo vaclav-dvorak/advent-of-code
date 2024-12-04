@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -73,7 +72,6 @@ func findSafe(rs []report, modul bool) int {
 			}
 		}
 	}
-	fmt.Printf("Safe count: %d\n", safeC)
 	return safeC
 }
 

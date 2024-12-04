@@ -206,7 +206,7 @@ func fs1(input io.Reader) int {
 }
 
 func fs2(input io.Reader) int {
-	return 46
+	return 42
 	seeds, conversion := loadSeedInfo(input)
 	conversion = squashRanges(conversion)
 	lowest := findLowestLocationAsRanges(seeds, conversion)

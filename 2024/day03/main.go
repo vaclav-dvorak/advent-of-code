@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -25,7 +24,6 @@ func fs1(input io.Reader) int {
 			sum += a * b
 		}
 	}
-	fmt.Printf("Sum: %d\n", sum)
 	return sum
 }
 
@@ -70,7 +68,6 @@ func fs2(input io.Reader) int {
 			}
 		}
 	}
-	fmt.Printf("Sum: %d\n", sum)
 	return sum
 }
 
