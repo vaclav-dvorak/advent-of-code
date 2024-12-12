@@ -9,31 +9,28 @@ import (
 )
 
 type antenna struct {
+	f rune
 	x int
 	y int
-	f rune
 }
 
-func findAntennas(city [][]rune) (antennas []antenna) {
+// Function to find antennas and create the hash map
+func findAntennasAndHash(city [][]rune) (antennas []antenna, antennasHash map[antenna]bool) {
+	antennasHash = make(map[antenna]bool)
 	for y, row := range city {
 		for x, cell := range row {
 			if cell != '.' {
-				antennas = append(antennas, antenna{x, y, cell})
+				a := antenna{cell, x, y}
+				antennas = append(antennas, a)
+				// Populate the antennasHash map with the transformed coordinates
+				antennasHash[a] = true
 			}
 		}
 	}
 	return
 }
 
-func hashAntennas(antennas []antenna) (antennasHash map[string]bool) {
-	antennasHash = make(map[string]bool)
-	for _, a := range antennas {
-		antennasHash[fmt.Sprintf("%c,%d,%d", a.f, a.x, a.y)] = true
-	}
-	return
-}
-
-func findAntinodes(city [][]rune, antennas []antenna, antennasHash map[string]bool) (count int) {
+func findAntinodes(city [][]rune, antennas []antenna, antennasHash map[antenna]bool) (count int) {
 	for y, row := range city {
 		for x := range row {
 			for _, a := range antennas {
@@ -42,8 +39,7 @@ func findAntinodes(city [][]rune, antennas []antenna, antennasHash map[string]bo
 				if distX == 0 && distY == 0 {
 					continue
 				}
-				hash := fmt.Sprintf("%c,%d,%d", a.f, x+2*distX, y+2*distY)
-				if ok := antennasHash[hash]; ok {
+				if ok := antennasHash[antenna{a.f, x + 2*distX, y + 2*distY}]; ok {
 					count++
 					break
 				}
@@ -70,8 +66,7 @@ func findAntinodeLines(city [][]rune, antennas []antenna) (count int) {
 	for y, row := range city {
 		for x := range row {
 			for _, a := range antennas {
-				distX := a.x - x
-				distY := a.y - y
+				distX, distY := a.x-x, a.y-y
 				if distX == 0 && distY == 0 {
 					// we are on antenna
 					found := false
@@ -88,23 +83,22 @@ func findAntinodeLines(city [][]rune, antennas []antenna) (count int) {
 				}
 				// we will compare vectors
 				di := gcd(distX, distY)
-				vector := fmt.Sprintf("%d,%d", distX/di, distY/di)
+				vector := [2]int{distX / di, distY / di}
 				found := false
 				for _, at := range antennas {
 					if (at.x == a.x && at.y == a.y) || (at.x == x && at.y == y) || (at.f != a.f) { //do not same antenna twice
 						continue
 					}
-					distTX := at.x - x
-					distTY := at.y - y
+					distTX, distTY := at.x-x, at.y-y
 					diT := gcd(distTX, distTY)
-					vectorT := fmt.Sprintf("%d,%d", distTX/diT, distTY/diT)
+					vectorT := [2]int{distTX / diT, distTY / diT}
 					if vector == vectorT {
 						// we are on same vector
 						found = true
 						break
 					}
 				}
-				if found { // we found another antenna with same frequency
+				if found { // we found another antenna on same vectorwith same frequency
 					count++
 					break
 				}
@@ -122,8 +116,7 @@ func fs1(input io.Reader) int {
 		city = append(city, []rune(line))
 	}
 
-	antennas := findAntennas(city)
-	antennasHash := hashAntennas(antennas)
+	antennas, antennasHash := findAntennasAndHash(city)
 	c := findAntinodes(city, antennas, antennasHash)
 	fmt.Printf("antinodes: %d\n", c)
 	return c
@@ -137,7 +130,7 @@ func fs2(input io.Reader) int {
 		city = append(city, []rune(line))
 	}
 
-	antennas := findAntennas(city)
+	antennas, _ := findAntennasAndHash(city)
 	c := findAntinodeLines(city, antennas)
 	fmt.Printf("antinodes: %d\n", c)
 	return c
