@@ -23,7 +23,41 @@ func countDigits(n int) int {
 	return count
 }
 
+func blinkStone(n, blinks int) int {
+	if ok := stoneCache[stoneItem{n, blinks}]; ok != 0 {
+		return stoneCache[stoneItem{n, blinks}]
+	}
+	if blinks == 0 {
+		return 1
+	}
+	l := 0
+	digits := countDigits(n)
+
+	if n == 0 {
+		l = blinkStone(1, blinks-1)
+	} else if digits%2 != 0 {
+		l = blinkStone(n*2024, blinks-1)
+	} else {
+		half := digits / 2
+		pow := int(math.Pow10(half))
+		left := n / pow
+		l1 := blinkStone(left, blinks-1)
+		l2 := blinkStone(n-left*pow, blinks-1)
+		l = l1 + l2
+	}
+	stoneCache[stoneItem{n, blinks}] = l
+	return l
+}
+
+type stoneItem struct {
+	n      int
+	blinks int
+}
+
+var stoneCache map[stoneItem]int
+
 func solveStones(input io.Reader, gens int) int {
+	stoneCache = make(map[stoneItem]int)
 	stones := make([]int, 0)
 	scanner := bufio.NewScanner(input)
 	for scanner.Scan() {
@@ -34,35 +68,12 @@ func solveStones(input io.Reader, gens int) int {
 			stones = append(stones, n)
 		}
 	}
-	blinks := 0
-	pows := make([]int, 100)
-	for blinks < gens {
-		newStones := make([]int, 0)
-		for i := 0; i < len(stones); i++ {
-			if stones[i] == 0 {
-				newStones = append(newStones, 1)
-				continue
-			}
-			digits := countDigits(stones[i])
-			if digits%2 != 0 {
-				newStones = append(newStones, stones[i]*2024)
-				continue
-			}
-			// we split stones
-			half := digits / 2
-			if ok := pows[half]; ok == 0 {
-				pows[half] = int(math.Pow10(half))
-			}
-			left := stones[i] / pows[half]
-			right := stones[i] - left*pows[half]
-			newStones = append(newStones, left, right)
-		}
-		stones = newStones
-		blinks++
-		fmt.Printf("i: %d len: %d\n", blinks, len(stones))
+	sum := 0
+	for i := 0; i < len(stones); i++ {
+		sum += blinkStone(stones[i], gens)
 	}
-	fmt.Printf("len: %d\n", len(stones))
-	return len(stones)
+	fmt.Printf("sum: %d\n", sum)
+	return sum
 }
 
 func fs1(input io.Reader) int {
@@ -70,8 +81,7 @@ func fs1(input io.Reader) int {
 }
 
 func fs2(input io.Reader) int {
-	return 42
-	// return solveStones(input, 75)
+	return solveStones(input, 75)
 }
 
 func main() {
