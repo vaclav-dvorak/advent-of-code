@@ -1,6 +1,6 @@
 # advent-of-code
 
-My solutions to the Advents of Code. Probably the best programming challenge can be find [here](https://adventofcode.com/).
+My solutions to the Advents of Code. Probably the best programming challenge can be find on [adventofcode.com](https://adventofcode.com/).
 
 ![Progress2021](https://progress-bar.xyz/11/?scale=25&title=2021%2011/25&width=120)
 
@@ -9,6 +9,8 @@ My solutions to the Advents of Code. Probably the best programming challenge can
 ![Progress2023](https://progress-bar.xyz/4/?scale=25&title=2023%2004/25&width=120)
 
 ![Progress2024](https://progress-bar.xyz/11/?scale=25&title=2024%2011/25&width=120)
+
+![Progress2025](https://progress-bar.xyz/1/?scale=25&title=2025%201/25&width=120)
 
 ## .env
 
