@@ -2,7 +2,6 @@ package main
 
 import (
 	"bufio"
-	"fmt"
 	"io"
 	"log"
 	"os"
@@ -10,15 +9,12 @@ import (
 )
 
 type cave struct {
-	name         string
-	isSmall      bool
-	visitedTimes int
-	adjacent     []*cave
+	name     string
+	isSmall  bool
+	adjacent []*cave
 }
 
-var caves map[string]*cave
 var pathCount int
-var visited map[string]bool
 
 func findPaths(caves map[string]*cave, current *cave, visited map[string]bool) {
 	start := caves["start"]
@@ -41,38 +37,48 @@ func findPaths(caves map[string]*cave, current *cave, visited map[string]bool) {
 	}
 }
 
-func findPaths2(caves map[string]*cave, current *cave, visited map[string]bool, visitedTwice bool) {
+func findPaths2(caves map[string]*cave, current *cave, visited map[string]int) {
 	start := caves["start"]
 	end := caves["end"]
-	if pathCount > 40 {
-		return
-	}
 	if current == end {
 		pathCount++
 		return
 	}
 	if current.isSmall {
-		visited[current.name] = true
-		current.visitedTimes++
-		if current.visitedTimes >= 2 {
-			current.visitedTimes--
-			visitedTwice = true
+		visited[current.name]++
+	}
+
+	// Check if any small cave has been visited twice in this path
+	hasTwiceVisited := false
+	for name, count := range visited {
+		if caves[name].isSmall && count == 2 {
+			hasTwiceVisited = true
+			break
 		}
 	}
+
 	for _, next := range current.adjacent {
-		if next == start || (next.isSmall && visited[next.name] && visitedTwice) {
+		if next == start {
 			continue
 		}
-		fmt.Printf("pc: %d, From %s -> %s\n", pathCount, current.name, next.name)
-		findPaths2(caves, next, visited, visitedTwice)
-
+		// If we've already used our "double visit" on one small cave,
+		// we can't visit any other small cave that's already been visited
+		if next.isSmall {
+			if hasTwiceVisited && visited[next.name] >= 1 {
+				continue
+			}
+			if !hasTwiceVisited && visited[next.name] >= 2 {
+				continue
+			}
+		}
+		findPaths2(caves, next, visited)
 	}
 	if current.isSmall {
-		visited[current.name] = false
+		visited[current.name]--
 	}
 }
 
-func fs1(input io.Reader) int {
+func readInput(input io.Reader) (caves map[string]*cave) {
 	caves = make(map[string]*cave)
 	scanner := bufio.NewScanner(input)
 	for scanner.Scan() {
@@ -93,41 +99,21 @@ func fs1(input io.Reader) int {
 		caves[in[0]].adjacent = append(caves[in[0]].adjacent, caves[in[1]])
 		caves[in[1]].adjacent = append(caves[in[1]].adjacent, caves[in[0]])
 	}
-	start := caves["start"]
+	return
+}
+
+func fs1(input io.Reader) int {
+	caves := readInput(input)
 	pathCount = 0
-	visited = make(map[string]bool)
-	findPaths(caves, start, visited)
+	findPaths(caves, caves["start"], make(map[string]bool))
 	return pathCount
 }
 
 func fs2(input io.Reader) int {
-	caves = make(map[string]*cave)
-	scanner := bufio.NewScanner(input)
-	for scanner.Scan() {
-		line := scanner.Text()
-		in := strings.Split(line, "-")
-		if _, ok := caves[in[0]]; !ok {
-			caves[in[0]] = &cave{
-				name:    in[0],
-				isSmall: in[0] == strings.ToLower(in[0]),
-			}
-		}
-		if _, ok := caves[in[1]]; !ok {
-			caves[in[1]] = &cave{
-				name:    in[1],
-				isSmall: in[1] == strings.ToLower(in[1]),
-			}
-		}
-		caves[in[0]].adjacent = append(caves[in[0]].adjacent, caves[in[1]])
-		caves[in[1]].adjacent = append(caves[in[1]].adjacent, caves[in[0]])
-	}
-	start := caves["start"]
+	caves := readInput(input)
 	pathCount = 0
-	visited = make(map[string]bool)
-	findPaths2(caves, start, visited, false)
-	fmt.Printf("Total paths: %d\n", pathCount)
-	// return pathCount
-	return 42
+	findPaths2(caves, caves["start"], make(map[string]int))
+	return pathCount
 }
 
 func main() {

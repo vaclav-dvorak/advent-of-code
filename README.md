@@ -2,7 +2,7 @@
 
 My solutions to the Advents of Code. Probably the best programming challenge can be find on [adventofcode.com](https://adventofcode.com/).
 
-![Progress2021](https://progress-bar.xyz/11/?scale=25&title=2021%2011/25%20&width=120)
+![Progress2021](https://progress-bar.xyz/12/?scale=25&title=2021%2012/25%20&width=120)
 
 ![Progress2022](https://progress-bar.xyz/11/?scale=25&title=2022%2011/25%20&width=120)
 
